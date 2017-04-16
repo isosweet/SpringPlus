@@ -4,4 +4,9 @@
   <artifactId>SpringPlus</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+  
+  <modules>
+  	<module>SpringPlus-SSM-xml</module>
+  </modules>
+  
 </project>
