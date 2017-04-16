@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springplus.ssm.mapper.UserMapper" >
+	
+  <sql id="Base_Column_List" >
+	    id as "id", 
+	    tenant_code as "tenantCode", 
+	    user_name as "userName", 
+	    mobile_number as "mobileNumber", 
+	    email as "email", 
+	    password as "password", 
+	    user_type as "userType", 
+	    register_time as "registerTime", 
+	    validity as "validity", 
+	    create_date as createDate, 
+	    update_date as "updateDate", 
+	    remarks as "remarks", 
+	    del_flag as "delFlag"
+  </sql>
+  
+  
+  <select id="getById" parameterType="java.lang.String" resultType="com.springplus.ssm.entity.User">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id} and del_flag = '0'
+  </select>
+  
+  <select id="totalCount" resultType="long">
+  	select count(*) 
+  	from user 
+  	where del_flag = '0'
+  </select>
+  
+  <insert id="insert" parameterType="User" >
+	    insert into user (id, 
+	    				  tenant_code, 
+	    				  user_name, 
+	      				  mobile_number, 
+	      				  email, 
+	      				  password, 
+	      				  user_type, 
+	      				  register_time, 
+	      				  validity, 
+	      				  create_date, 
+	      				  update_date, 
+	      				  remarks, 
+	      				  del_flag)
+	    				 values (#{id}, 
+	    				 		 #{tenantCode}, 
+	    				 		 #{userName}, 
+	      						 #{mobileNumber}, 
+	      						 #{email}, 
+	      						 #{password}, 
+	      						 #{userType}, 
+	      						 #{registerTime}, 
+	      						 #{validity}, 
+	      						 #{createDate}, 
+	      						 #{updateDate}, 
+	      						 #{remarks}, 
+	      						 #{delFlag})
+  </insert>
+
+  <update id="logicDelete" parameterType="String">
+	update user set 
+					del_flag = '1' 
+	where id = #{id}	
+  </update>
+
+  <update id="update" parameterType="User" >
+    update user
+    <set >
+      <if test="tenantCode != null" >
+        tenant_code = #{tenantCode},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName},
+      </if>
+      <if test="mobileNumber != null" >
+        mobile_number = #{mobileNumber},
+      </if>
+      <if test="email != null" >
+        email = #{email},
+      </if>
+      <if test="password != null" >
+        password = #{password},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType},
+      </if>
+      <if test="registerTime != null" >
+        register_time = #{registerTime},
+      </if>
+      <if test="validity != null" >
+        validity = #{validity},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+  <delete id="delete" parameterType="String">
+  	delete from user 
+  	where id = #{id}
+  </delete>
+  
+  
+</mapper>
