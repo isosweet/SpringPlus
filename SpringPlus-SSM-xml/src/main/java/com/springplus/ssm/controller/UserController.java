@@ -17,7 +17,7 @@ public class UserController {
 	private UserService serv;
 	
 	@GetMapping("getUser")
-	public @ResponseBody  long getUser(String userId) throws Exception{
+	public @ResponseBody  User getUser(String userId) throws Exception{
 		
 		System.out.println("userid---->" + userId);
 		
