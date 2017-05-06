@@ -6,7 +6,12 @@
   <packaging>pom</packaging>
   
   <modules>
+  	
+  	<!-- Spring + SpringMVC + MyBatis -->
   	<module>SpringPlus-SSM-xml</module>
+  	
+  	<!-- Spring + SpringMVC + Hibernate -->
+  	<module>SpringPlus-SSH-XML</module>
   </modules>
   
 </project>
