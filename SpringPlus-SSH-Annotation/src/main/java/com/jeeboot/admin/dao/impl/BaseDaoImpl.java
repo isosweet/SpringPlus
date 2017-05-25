@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -17,10 +15,9 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
-import com.alibaba.fastjson.JSON;
 import com.jeeboot.admin.dao.BaseDao;
 
 /**
@@ -28,12 +25,19 @@ import com.jeeboot.admin.dao.BaseDao;
  * 
  * @param <T>
  */
-public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
+public class BaseDaoImpl<T> implements BaseDao<T> {
 
-	@Resource(name = "sessionFactory")
-	public void setMySessionFactory(SessionFactory sessionFactory) {
-		super.setSessionFactory(sessionFactory);
-	}
+	/*
+     * 注入sessionFactory
+     */
+    @Autowired
+    @Qualifier("sessionFactory")
+    private SessionFactory sessionFactory;
+
+    public Session getSession() {
+    	// 事务必须是开启的(Required)，否则获取不到
+        return sessionFactory.getCurrentSession();
+    }
 
 	/**
 	 * 获取实体类
@@ -52,11 +56,6 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 	 */
 	protected String getEntityName() {
 		return getEntityClass().getName();
-	}
-
-	protected String getIdentifierPropertyName() {
-		String field = super.getSessionFactory().getClassMetadata(getEntityName()).getIdentifierPropertyName();
-		return field;
 	}
 
 	/**
@@ -83,7 +82,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		int count = 0;
 		Session session = null;
 		try {
-			session = getHibernateTemplate().getSessionFactory().openSession();
+			session = this.getSession();
 			Criteria criteria = session.createCriteria(getEntityClass());
 			for (Criterion criterion : criterions) {
 				criteria.add(criterion);
@@ -93,10 +92,6 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 			count = Integer.parseInt(criteria.uniqueResult().toString());
 		} catch (Exception e) {
 			throw e;
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
 		return count;
 	}
@@ -107,7 +102,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 
 		Session session = null;
 		try {
-			session = getHibernateTemplate().getSessionFactory().openSession();
+			session = this.getSession();
 			Criteria criteria = session.createCriteria(getEntityClass());
 
 			if (projectionList != null) {
@@ -121,11 +116,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 
 		} catch (Exception e) {
 			throw e;
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		} 
 		return obj;
 	}
 
@@ -229,7 +220,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		Session session = null;
 		try {
 			if (session == null) {
-				session = getHibernateTemplate().getSessionFactory().openSession();
+				session = this.getSession();
 			}
 			Criteria criteria = session.createCriteria(getEntityClass());
 
@@ -253,12 +244,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 			list = criteria.list();
 		} catch (Exception e) {
 			throw e;
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
-
 		return list;
 	}
 
@@ -306,7 +292,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		Session session = null;
 		try {
 			if (session == null) {
-				session = getHibernateTemplate().getSessionFactory().openSession();
+				session = this.getSession();
 			}
 			Criteria criteria = session.createCriteria(getEntityClass());
 
@@ -329,12 +315,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 			list = criteria.list();
 		} catch (Exception e) {
 			throw e;
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
-
+		} 
 		return list;
 	}
 
@@ -352,7 +333,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		int count = 0;
 		Session session = null;
 		try {
-			session = getHibernateTemplate().getSessionFactory().openSession();
+			session = this.getSession();
 			Query query = session.createQuery(hql);
 			if (values != null && values.length > 0) {
 				for (int i = 0; i < values.length; i++) {
@@ -363,10 +344,6 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 			count = ((Long)query.uniqueResult()).intValue();
 		} catch (Exception e) {
 			throw e;
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
 		return count;
 	}
@@ -375,7 +352,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		Object obj = null;
 		Session session = null;
 		try {
-			session = getHibernateTemplate().getSessionFactory().openSession();
+			session = this.getSession();
 			Query query = session.createQuery(hql);
 			if (values != null && values.length > 0) {
 				for (int i = 0; i < values.length; i++) {
@@ -385,11 +362,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 			obj = query.list();
 		} catch (Exception e) {
 			throw e;
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		} 
 		return obj;
 	}
 
@@ -428,10 +401,8 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		List<T> list = new ArrayList<T>();
 		Session session = null;
 		try {
-			session = getHibernateTemplate().getSessionFactory().openSession();
+			session = this.getSession();
 			Query query = session.createQuery(hql);
-			System.out.println(hql);
-			System.out.println(JSON.toJSONString(values));
 			if (values != null && values.length > 0) {
 				int i = 0;
 				for (Object value : values) {
@@ -439,7 +410,6 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 						Object[] arr = (Object[]) value;
 						for (Object item : arr) {
 							query.setParameter(i, item);
-							System.out.println(query.getNamedParameters().length);
 							i++;
 						}
 					} else {
@@ -455,11 +425,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 			list = query.list();
 		} catch (Exception e) {
 			throw e;
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		} 
 		return list;
 	}
 
@@ -475,7 +441,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		int count = 0;
 		Session session = null;
 		try {
-			session = getHibernateTemplate().getSessionFactory().openSession();
+			session = this.getSession();
 			Query query = session.createQuery(hql);
 			if (values != null && values.length > 0) {
 				for (int i = 0; i < values.length; i++) {
@@ -485,10 +451,6 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 			count = query.executeUpdate();
 		} catch (Exception e) {
 			throw e;
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
 		return count;
 	}
@@ -498,7 +460,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		List<T> list = new ArrayList<T>();
 		Session session = null;
 		try {
-			session = getHibernateTemplate().getSessionFactory().openSession();
+			session = this.getSession();
 			SQLQuery query = session.createSQLQuery(sql);
 			if (values != null && values.length > 0) {
 				for (int i = 0; i < values.length; i++) {
@@ -508,11 +470,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 			list = query.addEntity(getEntityClass()).list();
 		} catch (Exception e) {
 			throw e;
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		} 
 		return list;
 	}
 
@@ -521,30 +479,39 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 	 * 
 	 * @throws Exception
 	 */
-	@Override
 	public Serializable save(T entity) throws Exception {
 		Serializable serializable = null;
+		Session session = null;
 		try {
-			getHibernateTemplate().clear();
-			serializable = getHibernateTemplate().save(entity);
-			getHibernateTemplate().flush();
+			session = getSession();
+			serializable = session.save(entity);
 		} catch (Exception e) {
 			throw e;
 		}
 
 		return serializable;
 	}
+	
+	public Boolean saveOrUpdate(T entity) throws Exception {
+		Session session = null;
+		try {
+			session = getSession();
+			session.saveOrUpdate(entity);
+		} catch (Exception e) {
+			throw e;
+		}
 
+		return true;
+	}
+	
 	/**
 	 * 批量添加
 	 */
-	@Override
 	public Boolean save(List<T> entitys) throws Exception {
 		boolean flag = false;
 		Session session = null;
 		try {
-			session = getHibernateTemplate().getSessionFactory().openSession();
-			session.beginTransaction();
+			session = this.getSession();
 			session.clear();
 			for (int i = 0; i < entitys.size(); i++) {
 				session.save(entitys.get(i));
@@ -553,34 +520,8 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 					session.clear();
 				}
 			}
-			session.getTransaction().commit();
 			flag = true;
 		} catch (Exception e) {
-			session.getTransaction().rollback();
-			throw e;
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
-		return flag;
-	}
-
-	/**
-	 * 删除
-	 */
-	@Override
-	public Boolean delete(Serializable id) throws Exception {
-		boolean flag = false;
-		try {
-			T instance = getHibernateTemplate().get(getEntityClass(), id);
-			if (instance != null) {
-				getHibernateTemplate().clear();
-				getHibernateTemplate().delete(instance);
-				getHibernateTemplate().flush();
-				flag = true;
-			}
-		} catch (Exception e) {
 			throw e;
 		}
 		return flag;
@@ -589,13 +530,12 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 	/**
 	 * 删除
 	 */
-	@Override
 	public Boolean delete(T entity) throws Exception {
 		boolean flag = false;
+		Session session = null;
 		try {
-			getHibernateTemplate().clear();
-			getHibernateTemplate().delete(entity);
-			getHibernateTemplate().flush();
+			session = this.getSession();
+			session.delete(entity);
 			flag = true;
 		} catch (Exception e) {
 			throw e;
@@ -606,84 +546,30 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 	/**
 	 * 更新
 	 */
-	@Override
 	public Boolean update(T entity) throws Exception {
-		boolean flag = false;
-		try {
-			getHibernateTemplate().clear();
-			getHibernateTemplate().update(entity);
-			getHibernateTemplate().flush();
-			flag = true;
-		} catch (Exception e) {
-			throw e;
-		}
-		return flag;
-	}
-
-	/**
-	 * 批量更新
-	 */
-	@Override
-	public Boolean update(List<T> entitys) throws Exception {
 		boolean flag = false;
 		Session session = null;
 		try {
-			session = getHibernateTemplate().getSessionFactory().openSession();
-			session.beginTransaction();
-			session.clear();
-			for (int i = 0; i < entitys.size(); i++) {
-				session.update(entitys.get(i));
-				if (i + 1 % 20 == 0) {
-					session.flush();
-					session.clear();
-				}
-			}
-			session.getTransaction().commit();
+			session = this.getSession();
+			session.update(entity);
 			flag = true;
 		} catch (Exception e) {
-			session.getTransaction().rollback();
 			throw e;
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
 		return flag;
 	}
 
-	@Override
+	@SuppressWarnings("unchecked")
 	public T findById(Serializable id) throws Exception {
 		T instance = null;
+		Session session = null;
 		try {
-			instance = getHibernateTemplate().get(getEntityClass(), id);
+			session = this.getSession();
+			instance = (T) session.get(getEntityClass(), id);
 		} catch (Exception e) {
 			throw e;
 		}
 		return instance;
 	}
 
-	@Override
-	public List<T> findAll() throws Exception {
-		List<T> list = new ArrayList<T>();
-		try {
-			list = getHibernateTemplate().loadAll(getEntityClass());
-		} catch (Exception e) {
-			throw e;
-		}
-		return list;
-	}
-
-	@Override
-	public Boolean isRepeat(Serializable id) throws Exception {
-		boolean flag = false;
-		try {
-			int count = findCountByCriteria(Restrictions.eq(getIdentifierPropertyName(), id));
-			if (count > 0) {
-				flag = true;
-			}
-		} catch (Exception e) {
-			throw e;
-		}
-		return flag;
-	}
 }

@@ -13,7 +13,7 @@ public interface BaseDao<T> {
 	 * @throws Exception
 	 */
 	Serializable save(final T entity) throws Exception;
-
+	
 	/**
 	 * 批量添加
 	 * 
@@ -22,14 +22,8 @@ public interface BaseDao<T> {
 	 * @throws Exception
 	 */
 	Boolean save(final List<T> entitys) throws Exception;
-
-	/**
-	 * 删除
-	 * 
-	 * @param id
-	 * @throws Exception
-	 */
-	Boolean delete(final Serializable id) throws Exception;
+	
+	Boolean saveOrUpdate(T entity) throws Exception;
 
 	/**
 	 * 删除
@@ -50,15 +44,6 @@ public interface BaseDao<T> {
 	Boolean update(final T entity) throws Exception;
 
 	/**
-	 * 批量更新
-	 * 
-	 * @param entitys
-	 * @return
-	 * @throws Exception
-	 */
-	Boolean update(List<T> entitys) throws Exception;
-
-	/**
 	 * 主键查询
 	 * 
 	 * @param id
@@ -66,21 +51,5 @@ public interface BaseDao<T> {
 	 * @throws Exception
 	 */
 	T findById(final Serializable id) throws Exception;
-
-	/**
-	 * 查询全部
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	List<T> findAll() throws Exception;
-
-	/**
-	 * 根据ID检测重复
-	 * 
-	 * @param id
-	 * @return
-	 */
-	Boolean isRepeat(final Serializable id) throws Exception;
 
 }
