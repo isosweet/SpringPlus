@@ -12,6 +12,12 @@
   	
   	<!-- Spring + SpringMVC + Hibernate -->
   	<module>SpringPlus-SSH-XML</module>
+  	
+  	<!-- Spring + SpringMVC + Thymeleaft -->
+  	<module>SpringPlus-Thymeleaft</module>
+  	
+  	<!-- SSH JavaConfig-->
+  	<module>SpringPlus-SSH-Annotation</module>
   </modules>
   
 </project>
