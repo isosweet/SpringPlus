@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Home</title>
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<title>首页</title>
+<link th:href="@{static/css/bootstrap.css}" rel="stylesheet" type="text/css" media="all" />
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="js/jquery.min.js"></script>
+<script th:src="@{/static/js/jquery.min.js}"></script>
 <!-- Custom Theme files -->
 <!--theme-style-->
-<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />	
+<link th:href="@{/static/css/style.css}" rel="stylesheet" type="text/css" media="all" />	
 <!--//theme-style-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -15,21 +15,21 @@
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!---->
-<script src="js/menu_jquery.js"></script>
+<script th:src="@{/static/js/menu_jquery.js}"></script>
 </head>
 <body> 
 <!--header-->	
 <div class="header">
 	<div class="container">
 		 <div class="logo">
-		  	<a href="index.html"><img src="images/logo.png" alt="" ></a>
+		  	<a href="index.html"><img th:src="@{static/images/logo.png}" alt="" ></a>
 	  	 </div>
 	   <div class="head-right">
 	   	<div class="head-grid">
 	   		<ul>
 				<li ><span>+125775858</span></li>
 				<li ><span>+1486754582</span></li><label>|</label>
-				<li><div id="loginContainer"><a href="#" id="loginButton"><span>Login</span></a>
+				<li><div id="loginContainer"><a href="#" id="loginButton"><span>登录</span></a>
 					<div id="loginBox">                
 						  <form id="loginForm">
 						           <fieldset id="body">
@@ -52,14 +52,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</ul>
 	</div> 	
 	   <div class="top-nav">
-			  <span class="menu"><img src="images/menu.png" alt=""> </span>
+			  <span class="menu"><img th:src="@{static/images/menu.png}" alt=""> </span>
 					<ul>
-						 <li class="active"><a href="index.html">Home</a></li>
-					   	 <li><a href="about.html">About</a></li>
-					   	 <li><a href="gallery.html">Gallery</a></li>
-					   	 <li><a href="blog.html">Blog</a></li>
-					   	 <li><a href="codes.html">Short Codes</a></li>
-					   	 <li><a href="contact.html">Contact</a></li>
+						 <li class="active"><a href="index.html">首页</a></li>
+					   	 <li><a href="about.html">关于我们</a></li>
+					   	 <li><a href="gallery.html">画廊</a></li>
+					   	 <li><a href="contact.html">联系我们</a></li>
 						<div class="clearfix"> </div>
 					</ul>
 
@@ -88,7 +86,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.Latin literature from 45 BC.</p>
 				 </div>
 				<div class="col-sm-6 banner-head1">
-					<img src="images/dog1.png" class="img-responsive" alt="">
+					<img th:src="@{static/images/dog1.png}" class="img-responsive" alt="">
 				</div>
 				<div class="clearfix"> </div>
 			</div>
@@ -168,44 +166,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<!---->
 	</div>
 	<!---->
-	<div class="content-middle">
-		<div class="col-md-6 content-middle1">
-			<img src="images/ab.jpg" class="img-responsive" alt="">
-		</div>
-		<div class="col-md-6 content-middle2">
-			<h3>About</h3>
-				<p>Masagni dolores eoquie voluptaquisquam estqui dolorem ipsumquia dolor sitamnetase adipiscquam eiuse. Basmodi temporant, ut laboreas dolore magnam aliquam kuytase uaeraquis autem vel eum iure reprehend.Unicmquam eius, Basmodi temurer sehsMunim
-				nostrum exercitationem untarseam.
-It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters</p>
-					<ul>
-						<li><a href="#"><i class="glyphicon glyphicon-ok"></i>Masagni dolores eoquie voluptaquisquam estqui dolorem</a></li>
-						<li><a href="#"><i class="glyphicon glyphicon-ok"></i>Ipsumquia dolor sitamnetase adipiscquam eiuse</a></li>
-						<li><a href="#"><i class="glyphicon glyphicon-ok"></i>Basmodi temporant, ut laboreas dolore magnam aliquam</a></li>
-						<li><a href="#"><i class="glyphicon glyphicon-ok"></i>Masagni dolores eoquie voluptaquisquam estqui dolorem</a></li>
-					</ul>
-				
-		</div>
-		<div class="clearfix"> </div>
-	</div>
-	<!---->
 	<div class="events">
 		<div class="container">
 			<h2>Upcoming Events</h2>
 			<div class="events-top">
 				<div class="col-sm-4 top-event">
-					<a href="single.html"><img src="images/ev.jpg" class="img-responsive" alt=""></a>
+					<a href="single.html"><img th:src="@{static/images/ev.jpg}" class="img-responsive" alt=""></a>
 					<h4><a href="single.html">Masagni dolores eoquie</a></h4>
 					<span><i class="glyphicon glyphicon-calendar"></i>08/08/2015 11:00 Am</span>
 					<p>Masagni dolores eoquie voluptaquisquam estqui dolorem ipsumquia dolor sitamnetase adipiscquam eiuse. </p>
 				</div>
 					<div class="col-sm-4 top-event">
-					<a href="single.html"><img src="images/ev1.jpg" class="img-responsive" alt=""></a>
+					<a href="single.html"><img th:src="@{static/images/ev1.jpg}" class="img-responsive" alt=""></a>
 					<h4><a href="single.html">Masagni dolores eoquie</a></h4>
 					<span><i class="glyphicon glyphicon-calendar"></i>08/08/2015 11:00 Am</span>
 					<p>Masagni dolores eoquie voluptaquisquam estqui dolorem ipsumquia dolor sitamnetase adipiscquam eiuse. </p>
 				</div>
 					<div class="col-sm-4 top-event">
-					<a href="single.html"><img src="images/ev2.jpg" class="img-responsive" alt=""></a>
+					<a href="single.html"><img th:src="@{static/images/ev2.jpg}" class="img-responsive" alt=""></a>
 					<h4><a href="single.html">Masagni dolores eoquie</a></h4>
 					<span><i class="glyphicon glyphicon-calendar"></i>08/08/2015 11:00 Am</span>
 					<p>Masagni dolores eoquie voluptaquisquam estqui dolorem ipsumquia dolor sitamnetase adipiscquam eiuse. </p>
@@ -214,19 +192,19 @@ It is a long established fact that a reader will be distracted by the readable c
 			</div>
 			<div class="events-top">
 				<div class="col-sm-4 top-event">
-					<a href="single.html"><img src="images/ev3.jpg" class="img-responsive" alt=""></a>
+					<a href="single.html"><img th:src="@{static/images/ev3.jpg}" class="img-responsive" alt=""></a>
 					<h4><a href="single.html">Masagni dolores eoquie</a></h4>
 					<span><i class="glyphicon glyphicon-calendar"></i>08/08/2015 11:00 Am</span>
 					<p>Masagni dolores eoquie voluptaquisquam estqui dolorem ipsumquia dolor sitamnetase adipiscquam eiuse. </p>
 				</div>
 					<div class="col-sm-4 top-event">
-					<a href="single.html"><img src="images/ev4.jpg" class="img-responsive" alt=""></a>
+					<a href="single.html"><img th:src="@{static/images/ev4.jpg}" class="img-responsive" alt=""></a>
 					<h4><a href="single.html">Masagni dolores eoquie</a></h4>
 					<span><i class="glyphicon glyphicon-calendar"></i>08/08/2015 11:00 Am</span>
 					<p>Masagni dolores eoquie voluptaquisquam estqui dolorem ipsumquia dolor sitamnetase adipiscquam eiuse. </p>
 				</div>
 					<div class="col-sm-4 top-event">
-					<a href="single.html"><img src="images/ev5.jpg" class="img-responsive" alt=""></a>
+					<a href="single.html"><img th:src="@{static/images/ev5.jpg}" class="img-responsive" alt=""></a>
 					<h4><a href="single.html">Masagni dolores eoquie</a></h4>
 					<span><i class="glyphicon glyphicon-calendar"></i>08/08/2015 11:00 Am</span>
 					<p>Masagni dolores eoquie voluptaquisquam estqui dolorem ipsumquia dolor sitamnetase adipiscquam eiuse. </p>
@@ -258,7 +236,7 @@ It is a long established fact that a reader will be distracted by the readable c
 				<h4>Recent News</h4>
 			   <div class="footer-new">
 			   	<div class="footer-new1">
-			   		<a href="single.html"><img src="images/te.jpg" class="img-responsive" alt=""></a>
+			   		<a href="single.html"><img th:src="@{static/images/te.jpg}" class="img-responsive" alt=""></a>
 			   	</div>
 			   	<div class="footer-new2">
 			   		<p><a href="single.html">Masagni dolores eoquie voluptaquisquam.</a> </p>
@@ -267,7 +245,7 @@ It is a long established fact that a reader will be distracted by the readable c
 			   </div>
 			     <div class="footer-new">
 			   	<div class="footer-new1">
-			   		<a href="single.html"><img src="images/te2.jpg" class="img-responsive" alt=""></a>
+			   		<a href="single.html"><img th:src="@{static/images/te2.jpg}" class="img-responsive" alt=""></a>
 			   	</div>
 			   	<div class="footer-new2">
 			   		<p><a href="single.html">Masagni dolores eoquie voluptaquisquam.</a> </p>
@@ -276,7 +254,7 @@ It is a long established fact that a reader will be distracted by the readable c
 			   </div>
 			     <div class="footer-new">
 			   	<div class="footer-new1">
-			   		<a href="single.html"><img src="images/te3.jpg" class="img-responsive" alt=""></a>
+			   		<a href="single.html"><img th:src="@{static/images/te3.jpg}" class="img-responsive" alt=""></a>
 			   	</div>
 			   	<div class="footer-new2">
 			   		<p><a href="single.html">Masagni dolores eoquie voluptaquisquam. </a></p>
