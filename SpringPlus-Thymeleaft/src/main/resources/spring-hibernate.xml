@@ -44,7 +44,7 @@
 	
 	<!-- SessionFactory -->
 	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="hibernateProperties">
 			<props>

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:c="http://www.springframework.org/schema/c"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jee="http://www.springframework.org/schema/jee"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:c="http://www.springframework.org/schema/c" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -18,24 +14,50 @@
 	<!-- 注解映射 默认的注解映射的支持 ,它会自动注册DefaultAnnotationHandlerMapping 与AnnotationMethodHandlerAdapter -->
 	<mvc:annotation-driven />
 
-	<!-- 视图解析器 解析jsp，默认使用jstl标签，classpath下需要有jstl标签的jar包 -->
-	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/views/" />
-		<property name="suffix" value=".jsp" />
-		<property name="viewClass"
-			value="org.springframework.web.servlet.view.JstlView" />
-	</bean>
-
 	<!-- 支持返回的对象转换为Json -->
-    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" 
-         p:messageConverters-ref="messageConverters"/>  
-         
-    <util:list id= "messageConverters">
-        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
-    </util:list>	
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"
+		p:messageConverters-ref="messageConverters" />
+
+	<util:list id="messageConverters">
+		<bean
+			class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+	</util:list>
 
 	<!-- 静态资源映射 -->
-    <mvc:resources mapping="/static/**" location="/static/" cache-period="31536000"/>
+	<mvc:resources mapping="/static/**" location="/static/"
+		cache-period="31536000" />
+
+
+	<!-- SpringResourceTemplateResolver自动与Spring自己集成 -->
+	<!-- 资源解决基础设施, 强烈推荐。 -->
+	<bean id="templateResolver"
+		class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".html" />
+		<!-- HTML是默认值, 为了清楚起见, 在此处添加。 -->
+		<property name="templateMode" value="HTML" />
+		<!-- 默认情况下, 模板缓存为true。如果您想要设置为false -->
+		<!-- 模板在修改时自动更新。 -->
+		<property name="cacheable" value="true" />
+	</bean>
+
+	<!-- SpringTemplateEngine自动应用SpringStandardDialect并 -->
+	<!-- 使用Spring自己的MessageSource消息解析机制。 -->
+	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+		<property name="templateResolver" ref="templateResolver" />
+		<!-- 使用Spring 4.2.4或更高版本启用Spring EL编译器 -->
+		<!-- 可以加快大多数情况下的执行速度, 但是当一个模板中 -->
+		<!-- 的表达式在不同数据类型之间重用时, -->
+		<!-- 可能与特定情况不兼容, 因此该标志默认为“false” -->
+		<!-- 以实现更安全的向后兼容性。 -->
+		<property name="enableSpringELCompiler" value="true" />
+	</bean>
+
+	<bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+		<property name="templateEngine" ref="templateEngine" />
+		<!--解决中文乱码 -->
+		<property name="characterEncoding" value="UTF-8" />
+	</bean>
 
 </beans>
