@@ -5,5 +5,18 @@
 
     <body>
 		  <span th:text="${home}"></span>
+		  
+
+		<p>
+		  Today is: <span th:text="${#calendars.format(today,'dd MMMM yyyy')}">13 May 2011</span>
+		</p> 
+
+		<p>
+		  Now you are looking at a <span th:text="'Web 应用'">template file</span>.
+		</p> 
+
+		<p>今年是: <span th:text="2013">1492</span>.</p>
+
+		<p>加上两年, 将会是: <span th:text="2013 + 2">1494</span>.</p> 
     </body>
 </html>
