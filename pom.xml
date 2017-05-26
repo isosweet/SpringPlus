@@ -18,6 +18,9 @@
   	
   	<!-- SSH JavaConfig-->
   	<module>SpringPlus-SSH-Annotation</module>
+  	
+  	<module>SpringPlus-Thymeleaf</module>
+  	
   </modules>
   
 </project>
