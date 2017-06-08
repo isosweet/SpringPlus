@@ -4,10 +4,10 @@
 <title>首页</title>
 <link th:href="@{static/css/bootstrap.css}" rel="stylesheet" type="text/css" media="all" />
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script th:src="@{/static/js/jquery.min.js}"></script>
+<script th:src="@{static/js/jquery.min.js}"></script>
 <!-- Custom Theme files -->
 <!--theme-style-->
-<link th:href="@{/static/css/style.css}" rel="stylesheet" type="text/css" media="all" />	
+<link th:href="@{static/css/style.css}" rel="stylesheet" type="text/css" media="all" />	
 <!--//theme-style-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -15,7 +15,7 @@
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!---->
-<script th:src="@{/static/js/menu_jquery.js}"></script>
+<script th:src="@{static/js/menu_jquery.js}"></script>
 </head>
 <body> 
 <!--header-->	
@@ -81,7 +81,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="banner-top">
 				<div class="col-sm-6 head-banner">
 					<h1>Lorem <span>&</span> Ipsum</h1>
-					<h4>It is a long established fact that a reader</h4>
+					<h4 th:text="${title}">/h4>
 					
 					<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.Latin literature from 45 BC.</p>
 				 </div>
